@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        table,
+        td {
+            border: 1px solid #333;
+            white-space: nowrap;
+            padding-left: 7px;
+            padding-right: 7px;
+            height: 1px;
+        }
+
+        tr {
+            height: 7px;
+            white-space: nowrap;
+            padding: 7px;
+        }
+
+        thead,
+        tfoot {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div style="padding: 10px;">
+        <span> <b>Con số may mắn</b></span> <br>
+        Thời gian còn: <b> <span class="text-danger" id="timecsmm"></span></b>
+        <br>
+        Chẵn: <b><span id="chan" class="text-danger"></span></b> - Lẻ: <b><span class="text-danger"
+                id="le"></span></b><br>
+        Tài: <b><span id="tai" class="text-danger"></span></b> - Xỉu: <b><span class="text-danger"
+                id="xiu"></span></b><br>
+        Chẵn tài: <b><span id="chantai" class="text-danger"></span></b> - Chẵn xỉu: <b><span class="text-danger"
+                id="chanxiu"></span></b><br>
+        Lẻ tài: <b><span id="letai" class="text-danger"></span></b> - Lẻ xỉu: <b><span class="text-danger"
+                id="lexiu"></span></b>
+
+        <br>
+
+        <button style="width:70px" class="btn btn-sm btn-info font-weight-bold" onclick="setkqcsmm(1)">Chẵn</button>
+        <button style="width:70px" class="btn btn-sm btn-warning  font-weight-bold text-white" onclick="setkqcsmm(2)">
+            Lẻ </button>
+        <button style="width:70px" class="btn btn-sm btn-success  font-weight-bold" onclick="setkqcsmm(3)">Tài</button>
+        <button style="width:70px" class="btn btn-sm btn-info font-weight-bold" onclick="setkqcsmm(4)">Xỉu</button>
+
+        <div style="margin-top: 5px;"></div>
+
+
+        <button id="btnchantai" class="btn btn-sm btn-info font-weight-bold text-white" onclick="setkqcsmm(5)">Chẵn
+            tài</button>
+        <div style="margin-top: 5px;"></div>
+
+
+        <button id="btnchanxiu" class="btn btn-sm btn-warning  font-weight-bold text-white" onclick="setkqcsmm(6)">
+            Chẵn xỉu </button>
+        <div style="margin-top: 5px;"></div>
+
+        <button id="btnletai" class="btn btn-sm btn-success  font-weight-bold text-white" onclick="setkqcsmm(7)">Lẻ
+            tài</button>
+        <div style="margin-top: 5px;"></div>
+
+        <button id="btnlexiu" class="btn btn-sm btn-info font-weight-bold text-white" onclick="setkqcsmm(8)">Lẻ
+            xỉu</button>
+        <div style="margin-top: 10px;"></div>
+
+        <span>Auto:</span>
+        <input type="radio" id="bat" name="age" value="30">
+        <label for="age1">Bật</label>
+        <input type="radio" id="tat" name="age" value="60">
+        <label for="age2">Tắt</label><br>
+
+        <br>
+        <br>
+        <label> Tùy chọn số: </label>
+        <input style="height: 26%;" id="ketquazz" type="number" value="">
+        <button onclick="setkqcsmm(10)" style="height: 26%;"> Ok</button>
+        <div style="margin-top: 10px;">
+            <div class="col-lg-5" style="padding-left: 0px;">
+                <span>Server: </label>
+                    <select id="server">
+                        
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    
+                    </select>
+                    <label> Số bản ghi: </label>
+                    <select id="record">
+                        <option value="10">10</option>
+                        <option value="50">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+
+                    <table style="margin-top: 5px;" class=" text-center">
+
+                        <tbody id="lscsmm">
+
+                        </tbody>
+                    </table>
+            </div>
+
+        </div>
+       
+    </div>
+
+</body>
+
+
+
+
+<script>
+    
+
+
+    var indexAutob = 0;
+    var checkeeee = false;
+    autob = (temp) => {
+        //console.log(temp)
+        if (Number(temp.timecsmm) > 6) {
+            checkeeee = false;
+        }
+        if (document.getElementById("bat").checked) {
+            if (Number(temp.timecsmm) < 6 && !checkeeee) {
+                checkeeee = true
+                if (indexAutob % 3 != 0) {
+                    var typeloi = []
+                    var ccc = [temp.vangtinhz.chantai, temp.vangtinhz.chanxiu, temp.vangtinhz.letai, temp.vangtinhz.lexiu]
+                    for (let i = 0; i < ccc.length; i++) {
+                        if (ccc[i] > 0) {
+                            typeloi.push(i)
+                        }
+                    }
+                    if (typeloi.length > 0) {
+                        const ccccccc = 5 + Number(typeloi[random(0, typeloi.length)])
+                        setkqcsmm2(ccccccc)
+                        console.log("kq" + ccccccc + " " + indexAutob)
+
+                    }
+                }
+                indexAutob++
+            }
+        }
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    function random(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+    setInterval(() => {
+        get()
+    }, 500)
+  
+    function setkqcsmm(type) {
+        var number = -1
+        if (type == 1) {
+            while (number % 2 != 0 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 2) {
+            while (number % 2 == 0 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 3) {
+            while (number < 50 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 4) {
+            while (number > 50 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 5) {
+            while (number < 50 || number % 2 != 0 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 6) {
+            while (number > 50 || number % 2 != 0 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 7) {
+            while (number < 50 || number % 2 == 0 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 8) {
+            while (number > 50 || number % 2 == 0 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 10) {
+            number = $('#ketquazz').val()
+            if (isNaN(number) || number > 99 || number < 0 || number == "") {
+                alert("không hợp lệ")
+                return
+            }
+
+            if (!confirm('bạn có chắc không ?')) {
+                return
+            }
+        }
+        console.log(number)
+        $.ajax({
+            url: "/game/choidep.garena",
+            type: "post",
+            data: { type: "setkq", server: $('#server').val(), kq: number },
+            success: function (result) {
+                alert(result)
+            }
+        });
+    }
+
+
+    function setkqcsmm2(type) {
+        var number = -1
+        if (type == 1) {
+            while (number % 2 != 0 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 2) {
+            while (number % 2 == 0 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 3) {
+            while (number < 50 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 4) {
+            while (number > 50 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 5) {
+            while (number < 50 || number % 2 != 0 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 6) {
+            while (number > 50 || number % 2 != 0 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 7) {
+            while (number < 50 || number % 2 == 0 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 8) {
+            while (number > 50 || number % 2 == 0 || number == -1) {
+                number = random(1, 98)
+            }
+        }
+        else if (type == 10) {
+            number = $('#ketquazz').val()
+            if (isNaN(number) || number > 99 || number < 0 || number == "") {
+                console.log("không hợp lệ")
+                return
+            }
+
+            if (!confirm('bạn có chắc không ?')) {
+                return
+            }
+        }
+        console.log(number)
+        $.ajax({
+            url: "/game/choidep.garena",
+            type: "post",
+            data: { type: "setkq", server: $('#server').val(), kq: number },
+            success: function (result) {
+                console.log(result)
+            }
+        });
+    }
+    function get() {
+        $.ajax({
+            url: "/game/choidep.garena",
+            type: "post",
+            data: { type: "get", server: $('#server').val(), record: $('#record').val() },
+            success: function (result) {
+                var json = (result)
+                $('#chan').text(json.vangchan)
+                $('#le').text(json.vangle)
+                $('#tai').text(json.vangtai)
+                $('#xiu').text(json.vangxiu)
+                $('#chantai').text(json.chantai)
+                $('#chanxiu').text(json.chanxiu)
+                $('#letai').text(json.letai)
+                $('#lexiu').text(json.lexiu)
+                $('#timecsmm').text(json.timecsmm)
+                $('#lscsmm').html(json.cuoccsmm)
+             
+                $('#btnchantai').html("Chẵn tài - Khách ăn: <span style='color:yellow'>" + numberWithCommas(Math.round(json.vangthang.vangthangchantai)) + "</span>" + getloilost(json.vangtinhz.chantai))
+                $('#btnchanxiu').html("Chẵn xỉu - Khách ăn: <span style='color:yellow'>" + numberWithCommas(Math.round(json.vangthang.vangthangchanxiu)) + "</span>" + getloilost(json.vangtinhz.chanxiu))
+                $('#btnletai').html("Lẻ tài - Khách ăn: <span style='color:yellow'>" + numberWithCommas(Math.round(json.vangthang.vangthangletai)) + "</span>" + getloilost(json.vangtinhz.letai))
+                $('#btnlexiu').html("Lẻ xỉu - Khách ăn: <span style='color:yellow'>" + numberWithCommas(Math.round(json.vangthang.vangthanglexiu)) + "</span>" + getloilost(json.vangtinhz.lexiu))
+                autob(json);
+
+            }
+        });
+    }
+    function getloilost(x) {
+        if (x > 0) {
+            return ' - <span ;">Lời: +' + numberWithCommas(Math.round(x)) + '</span>'
+        }
+        else if (x < 0) {
+            return ' - <span class="text-dark">Lỗ: ' + numberWithCommas(Math.round(x)) + '</span>'
+
+        }
+        else {
+            return ' - <span >Hòa 0</span>'
+            return
+        }
+    }
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+</script>
+
+</html>

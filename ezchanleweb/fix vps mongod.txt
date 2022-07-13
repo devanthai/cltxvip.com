@@ -1,0 +1,8 @@
+
+sudo chown -R $USER THAIDB
+
+pm2 start "mongod --dbpath THAIDB"
+
+sudo vi /etc/yum.repos.d/mongodb-org-5.0.repo
+
+sudo chown -R $USER THAIDB

@@ -1,0 +1,124 @@
+<div class="block-header">
+    <h2>Bot vàng</h2>
+</div>
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    Thêm bot
+                </h2>
+            </div>
+            <div class="body">
+                <h2 class="card-inside-title">Loại bot:</h2>
+                <div class="row clearfix">
+                    <div class="col-sm-12">
+
+                        <select id="TypeBot" class="form-control show-tick">
+                            <option value="">-- Vui lòng chọn --</option>
+                            <option value="1">Nạp vàng</option>
+                            <option value="2">Rút vàng</option>
+                        </select>
+                        <h2 class="card-inside-title">Tài khoản</h2>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input id="Username" type="text" class="form-control" placeholder="tk">
+                            </div>
+                        </div>
+                        <h2 class="card-inside-title">Mật khẩu</h2>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input id="Password" type="text" class="form-control" placeholder="mk">
+                            </div>
+                        </div>
+                        <h2 class="card-inside-title">Server</h2>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select id="Server" class="form-control show-tick">
+                                    <option value="">-- Vui lòng chọn --</option>
+                                    <option value="1">Server 1</option>
+                                    <option value="2">Server 2</option>
+                                    <option value="3">Server 3</option>
+                                    <option value="4">Server 4</option>
+                                    <option value="5">Server 5</option>
+                                    <option value="6">Server 6</option>
+                                    <option value="7">Server 7</option>
+                                    <option value="8">Server 8</option>
+                                    <option value="9">Server 9</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <h2 class="card-inside-title">Khu vực</h2>
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input id="Zone" type="number" class="form-control" placeholder="">
+                            </div>
+                        </div>
+
+                        <h2 class="card-inside-title">Tọa độ</h2>
+                        <div class="row clearfix">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input id="ToaDoX" type="number" class="form-control" placeholder="x">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input id="ToaDoY" type="number" class="form-control" placeholder="y">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" onclick="addBot()"
+                            class="btn btn-block btn-lg btn-primary waves-effect">Thêm ngay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    addBot = () => {
+        const Username = $("#Username").val()
+        const Password = $("#Password").val()
+        const TypeBot = $("#TypeBot").val()
+        const Server = $("#Server").val()
+        const Zone = $("#Zone").val()
+        const ToaDoX = $("#ToaDoX").val()
+        const ToaDoY = $("#ToaDoY").val()
+        $.ajax({
+            type: "POST",
+            url: "/botvang/thembot",
+            datatype: 'json',
+            data: {
+                Username: Username,
+                Password: Password,
+                TypeBot: TypeBot,
+                Server: Server,
+                Zone: Zone,
+                ToaDoX: ToaDoX,
+                ToaDoY: ToaDoY
+            },
+            success: (data) => {
+              
+                if (data.error == false) {
+                    var elements = document.getElementsByTagName("input");
+                    for (var ii = 0; ii < elements.length; ii++) {
+                        if (elements[ii].type == "text") {
+                            elements[ii].value = "";
+                        }
+                    }
+                    alert("Đã thêm")
+                }
+                else {
+                    alert("Lỗi vui lòng kiểm tra lại")
+                }
+            }
+        })
+    }
+</script>

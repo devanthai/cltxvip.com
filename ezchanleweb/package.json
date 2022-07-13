@@ -1,0 +1,40 @@
+{
+  "name": "thai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.10",
+    "cheerio-tableparser": "^1.0.1",
+    "cookie-session": "^1.4.0",
+    "crypto": "^1.0.1",
+    "deep-email-validator": "^0.1.18",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "email-verify": "^0.2.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "http": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "md5": "^2.3.0",
+    "moment": "^2.29.1",
+    "mongoose": "^5.13.2",
+    "morgan": "^1.10.0",
+    "node-captcha-generator": "0.0.1",
+    "nodemon": "^2.0.10",
+    "request": "^2.88.2",
+    "socket.io": "^4.1.2",
+    "websocket": "^1.0.34",
+    "ws": "^7.5.3"
+  }
+}

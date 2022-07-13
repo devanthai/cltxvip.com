@@ -1,0 +1,156 @@
+<div class="container" id="userBody">
+    <div class="row">
+        <div class="col-lg-3">
+
+            <style>
+                @media (min-width: 1199.98px) {
+                    .col-lg-3 {
+                        padding-right: 0px;
+                    }
+
+                    .col-lg-9 {
+                        padding-left: 10px;
+                    }
+                }
+
+                @media (max-width: 1199.98px) {
+                    .col-lg-9 {
+                        margin-top: 25px;
+                    }
+                }
+
+                .userHeader li {
+                    margin-bottom: 10px;
+                    border-bottom: 1px solid #f2f2f2;
+                }
+
+                .userHeader_Title {
+                    margin-bottom: 0px;
+                }
+
+                .userHeader_Gach {
+                    background-color: #32c5d2;
+                    height: 2px;
+                    width: 50px;
+                    text-align: left;
+                    display: inline-block;
+                }
+
+                #th_dmk:hover {
+                    cursor: pointer;
+                }
+
+                #userBody {
+                    margin-top: 35px;
+                }
+                #tableCard td{white-space:nowrap;}
+            </style>
+            <!--
+  <div class="userHeader" style="font-family: 'Roboto';">
+    <div style="border-left: 7px solid #32c5d2; padding-left: 7px; margin-bottom: 25px">
+      <h5 style="padding-left: 15px;">MENU TÀI KHOẢN</h5>
+    </div>
+    <div>
+      <ul style="list-style-type: none; padding-left: 0px">
+        <li><i class="fas fa-square" style="color: #32c5d2; margin-right: 10px; font-size: 10px"></i> <a href="#" style="color: inherit">Thông tin tài khoản</a></li>
+        <li><i class="fas fa-square" style="color: #32c5d2; margin-right: 10px; font-size: 10px"></i> <a href="#" style="color: inherit">Thông tin tài khoản</a></li>
+      </ul>
+    </div>
+  </div>
+  -->
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+            <link
+                href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap"
+                rel="stylesheet">
+
+
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+            <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+            <div class="userHeader" roboto";"="">
+                <div style="border-left: 7px solid #32c5d2; padding-left: 7px; margin-bottom: 25px">
+                    <h5 style="padding-left: 15px;">MENU TÀI KHOẢN</h5>
+                </div>
+                <div>
+                    <ul style="list-style-type: none; padding-left: 0px">
+                        <%- menu %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="row" id="lichSuRutTien">
+                <div class="col">
+                    <table class="table table-hover table-bordered table-responsive-sm text-center" id="tableCard">
+                        <thead class="thead-light">
+                            <tr>
+
+                                <th scope="col">Thời gian</th>
+                                <th scope="col">Nội dung</th>
+                                <th scope="col">Giao dịch</th>
+                                <th scope="col">Số vàng</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            
+                            <% if (products.length<=0) { %>
+                                <tr class="text-center"> <td colspan="6">Bạn chưa thực hiện giao dịch nào</td> </tr>
+                                <% }  %>
+                            <% for (var i = 0; i < products.length; i++) { %>
+
+                               
+                                <tr>
+
+                                    <td scope="col"> <%= new Date(Date.parse(products[i].time)).toLocaleString()%></td>
+                                    <td scope="col"><%= products[i].giaodich %></td>
+                                    <td scope="col"><%= products[i].noidung %></td>
+                                    <td scope="col">   <%=  String(products[i].vang).replace(/(.)(?=(\d{3})+$)/g,'$1,')%></td>
+                                </tr>
+
+                               
+                            <% } %>
+                            
+                           
+                        </tbody>
+
+
+                    </table>
+                   
+                    <% if (pages > 0) { %>
+                        <nav aria-label="...">
+                            <ul class="pagination">
+                            <% if (current == 1) { %>
+                                <li class="page-item disabled"><a class="page-link">Đầu</a></li>
+                            <% } else { %>
+                                <li><a class="page-link" href="/user/sodu/1">Đầu</a></li>
+                            <% } %>
+                            <% var i = (Number(current) > 2 ? Number(current) - 2 : 1) %>
+                            <% if (i !== 1) { %>
+                                <li class="disabled"><a class="page-link">...</a></li>
+                            <% } %>
+                            <% for (; i <= (Number(current) + 2) && i <= pages; i++) { %>
+                                <% if (i == current) { %>
+                                    <li class="page-item active"><a class="page-link"><%= i %></a></li>
+                                <% } else { %>
+                                    <li><a class="page-link" href="/user/sodu/<%= i %>"><%= i %></a></li>
+                                <% } %>
+                                <% if (i == Number(current) + 2 && i < pages) { %>
+                                    <li class="page-item disabled"><a class="page-link">...</a></li>
+                                <% } %>
+                            <% } %>
+                            <% if (current == pages) { %>
+                                <li class="page-item disabled"><a class="page-link">Cuối</a></li>
+                            <% } else { %>
+                                <li><a class="page-link" href="/user/sodu/<%= pages %>">Cuối</a></li>
+                            <% } %>
+                        </ul>
+                    </nav>
+                    <% } %>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

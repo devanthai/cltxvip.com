@@ -1,0 +1,272 @@
+<!-- JQuery DataTable Css -->
+<link href="/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+
+<div class="block-header">
+    <h2>
+        Quản lý bot
+
+    </h2>
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+
+            <div class="body">
+
+                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                    <thead>
+                        <tr>
+                            <th hidden="true">ID</th>
+                            <th>Server</th>
+                            <th>Tài khoản</th>
+                            <th hidden="true">Mật khẩu</th>
+                            <th>Tên</th>
+                            <th>Kiểu</th>
+                            <th>Khu vực</th>
+                            <th>Số vàng</th>
+                            <th>Tọa độ</th>
+                            <th>Mã vps</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <% for (var i=0; i < bots.length; i++) { %>
+
+                            <tr>
+                                <td hidden="true"><%=bots[i]._id%></td>
+                                <td> <span class="label label-info">Server <%=bots[i].Server%></span></td>
+                                <td><%=bots[i].Username%></td>
+                                <td hidden="true"><%=bots[i].Password%></td>
+                                <td><%=bots[i].Name%></td>
+                                <td><span class="label label-<%=bots[i].TypeBot==1?"warning":"danger"%>"><%=bots[i].TypeBot==1?"Nạp vàng":"Rút Vàng"%></span></td>
+                                <td><%=bots[i].Zone%></td>
+                                <td><%= String(Math.round(bots[i].Gold)).replace(/(.)(?=(\d{3})+$)/g,'$1,')%> </td>
+                                <td>x<%=bots[i].ToaDoX%>, y<%=bots[i].ToaDoY%>
+                                </td>
+                                <td><%=bots[i].CodeVps%></td>
+                                <td>
+                                    <span class="label label-<%=bots[i].Status==-1?"warning":"success"%>">
+                                        <%=bots[i].Status==-1?"Đang chờ":"Hoạt động"%> (<%= Math.floor((new Date() - bots[i].updatedAt) / 1000); %>s trước)</span>
+                                </td>
+                                <td><button type="button" class="btn bg-orange   btn-xs waves-effect" onclick="Change(this)">Chỉnh
+                                        sửa</button><button style="margin-left: 5px;" type="button" class="btn bg-red  btn-xs waves-effect" onclick="Remove(this)">Xóa</button></td>
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="change" tabindex="-1" role="dialog" style="display: none;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="largeModalLabel">Chỉnh sửa</h4>
+            </div>
+            <div class="modal-body">
+                <div class="body">
+                    <span hidden="true" id="IDdoc" ></span>
+                    <h5 class="card-inside-title">Server</h5>
+
+                    <div class="form-group">
+                        <div class="form-line">
+                            <select id="Server" class="form-control show-tick">
+                                <option value="">-- Vui lòng chọn --</option>
+                                <option value="1">Server 1</option>
+                                <option value="2">Server 2</option>
+                                <option value="3">Server 3</option>
+                                <option value="4">Server 4</option>
+                                <option value="5">Server 5</option>
+                                <option value="6">Server 6</option>
+                                <option value="7">Server 7</option>
+                                <option value="8">Server 8</option>
+                                <option value="9">Server 9</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <h5 class="card-inside-title">Loại bot</h5>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <select id="LoaiBot" class="form-control show-tick">
+                                <option value="">-- Vui lòng chọn --</option>
+                                <option value="1">Nạp vàng</option>
+                                <option value="2">Rút vàng</option>
+                        
+                            </select>
+                        </div>
+                    </div>
+                    <h5 class="card-inside-title">Tài khoản</h5>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input id="Username" type="text" class="form-control" placeholder="Tài khoản">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="card-inside-title">Mật khẩu:</h5>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input id="Password" type="text" class="form-control" placeholder="Mật khẩu"></input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="card-inside-title">Khu vực:</h5>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input  id="Zone" type="number" class="form-control" placeholder="Khu vực"></input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="card-inside-title">Tọa độ:</h5>
+                    <div class="row clearfix">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input id="ToaDo" type="text" class="form-control" placeholder="Khu vực"></input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="SaveChange()" class="btn btn-link waves-effect">Lưu</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    Remove = (doc)=>{
+        if (!confirm("Bạn có chắc muốn xóa bot này không?")) {
+            return;
+        }
+        var ID = doc.parentElement.parentNode.children[0].innerText
+        $.ajax({
+            type: "POST",
+            url: "/botvang/remove",
+            datatype: 'json',
+            data: {
+                _id: ID
+            },
+            success: (data) => {
+                if (data.error == false) {
+                    var tr = doc.parentElement.parentNode
+                    $('.dataTable').DataTable().row(tr).remove().draw(false);
+                    alert("Đã xóa thành công")
+                }
+                else {
+                    alert("Lỗi vui lòng kiểm tra lại")
+                }
+            }
+        })
+    }
+    var Tr = null
+    Change = (doc)=>{
+        $("#change").modal("show")
+        Tr = doc.parentElement.parentNode
+        var ID = Tr.children[0].innerText
+        var Server = Tr.children[1].innerText
+        var Username = Tr.children[2].innerText
+        var TypeBot = Tr.children[5].innerText
+      
+        if(TypeBot.includes("Nạp vàng"))
+        {
+            TypeBot = 1
+        }
+        else
+        {
+            TypeBot = 2
+
+        }
+        var Password = Tr.children[3].innerText
+        var Zone = Tr.children[6].innerText
+        var ToaDo = Tr.children[8].innerText
+        $("#IDdoc").text(ID)
+        $("#Server").val(Server.replace("Server ","")).change();
+        $("#LoaiBot").val(TypeBot).change();
+        $("#Zone").val(Zone)
+        $("#ToaDo").val(ToaDo)
+        $("#Username").val(Username)
+        $("#Password").val(Password)
+    }
+    SaveChange = () =>{
+        const ID= $("#IDdoc").text()
+        const Server = $("#Server").val()
+        const Zone =$("#Zone").val()
+        const ToaDo =$("#ToaDo").val()
+        const ToaDoX = ToaDo.split(',')[0].replace("x","")
+        const ToaDoY = ToaDo.split(',')[1].replace(" y","")
+        const Username = $("#Username").val()
+        const Password =$("#Password").val()
+        const LoaiBot =$("#LoaiBot").val()
+        $.ajax({
+            type: "POST",
+            url: "/botvang/change",
+            datatype: 'json',
+            data: {
+                _id: ID,
+                Server:Server,
+                Zone:Zone,
+                ToaDoX:ToaDoX,
+                ToaDoY:ToaDoY,
+                Username:Username,
+                Password:Password,
+                Type:LoaiBot
+            },
+            success: (data) => {
+                if (data.error == false) {
+                    Tr.children[1].innerHTML = '<span class="label label-info">'+'Server ' +Server+'</span>'
+                    Tr.children[2].innerText = Username
+                    Tr.children[3].innerText = Password
+
+                    if(LoaiBot==1)
+                    {
+                        Tr.children[5].innerHTML = '<span class="label label-warning">Nạp vàng</span>'
+
+                    }
+                    else
+                    {
+                        Tr.children[5].innerHTML = '<span class="label label-danger">Rút Vàng</span>'
+
+                    }
+
+
+                    Tr.children[6].innerText = Zone
+                    Tr.children[8].innerText = ToaDo
+                    alert("Sửa thành công")
+                }
+                else {
+                    alert("Lỗi vui lòng kiểm tra lại")
+                }
+            }
+        })
+    }
+</script>
+
+<!-- Jquery DataTable Plugin Js -->
+<script src="/plugins/jquery-datatable/jquery.dataTables.js"></script>
+<script src="/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+<script src="/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+<script src="/plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+<script src="/plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+<script src="/plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+<script src="/plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+<script src="/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+<script src="/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+
+<script src="/js/pages/tables/jquery-datatable.js"></script>
